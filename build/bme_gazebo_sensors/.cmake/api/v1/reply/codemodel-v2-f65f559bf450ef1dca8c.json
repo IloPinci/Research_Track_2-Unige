@@ -1,0 +1,233 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-4757beef43c9b7a052fc.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17
+					]
+				},
+				{
+					"build" : "bme_gazebo_sensors__py",
+					"jsonFile" : "directory-bme_gazebo_sensors__py-936bde361c349752c5a0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/snape/rt_2/actions/build/bme_gazebo_sensors/bme_gazebo_sensors__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "bme_gazebo_sensors",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_bme_gazebo_sensors_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_bme_gazebo_sensors_egg-bc8e27e8d344787c7b2b.json",
+					"name" : "ament_cmake_python_build_bme_gazebo_sensors_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_bme_gazebo_sensors::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_bme_gazebo_sensors-4e24a50bd47ec6b01f45.json",
+					"name" : "ament_cmake_python_copy_bme_gazebo_sensors",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors-a57ba5aae36c72873d55.json",
+					"name" : "bme_gazebo_sensors",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__cpp-c0434256304aaab0f29b.json",
+					"name" : "bme_gazebo_sensors__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "bme_gazebo_sensors__py::@07b2e83529e70f668544",
+					"jsonFile" : "target-bme_gazebo_sensors__py-17293a83609c7891064e.json",
+					"name" : "bme_gazebo_sensors__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_generator_c-bcc801f5ca0eb9bf2a68.json",
+					"name" : "bme_gazebo_sensors__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_generator_py-dc5b0f621be579e6b58c.json",
+					"name" : "bme_gazebo_sensors__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_c-7b2b892965080273193d.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_c__pyext-2d4674dd58a9b6c5f461.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_cpp-4b7f8355c48116d01f59.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_fastrtps_c-0eccd6ed06e12510118a.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_fastrtps_c__pyext-f6f2d866816ec8a4ae53.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_fastrtps_cpp-dbd00ef50b42842218de.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_introspection_c-a8cf272319a7d719b938.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_introspection_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_introspection_c__pyext-011960f79741e3415e9b.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_introspection_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors__rosidl_typesupport_introspection_cpp-01c41a9a998814e63ca2.json",
+					"name" : "bme_gazebo_sensors__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bme_gazebo_sensors_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bme_gazebo_sensors_uninstall-229d42248694a7760877.json",
+					"name" : "bme_gazebo_sensors_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-711df9152d27b798d7e4.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/snape/rt_2/actions/build/bme_gazebo_sensors",
+		"source" : "/home/snape/rt_2/actions/bme_gazebo_sensors"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

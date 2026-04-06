@@ -1,0 +1,10 @@
+# Goal
+float64  target_coordinate
+---
+
+# Result
+float64  final_coordinate
+---
+
+# Feedback
+float64 current_coordinate

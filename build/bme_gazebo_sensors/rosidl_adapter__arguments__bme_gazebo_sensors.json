@@ -1,0 +1,6 @@
+{
+  "package_name": "bme_gazebo_sensors",
+  "non_idl_tuples": [
+    "/home/snape/rt_2/actions/bme_gazebo_sensors:action/MoveAction.action"
+  ]
+}

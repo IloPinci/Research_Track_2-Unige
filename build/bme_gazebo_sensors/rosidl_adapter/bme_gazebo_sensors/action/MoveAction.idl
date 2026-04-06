@@ -1,0 +1,24 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from bme_gazebo_sensors/action/MoveAction.action
+// generated code does not contain a copyright notice
+
+
+module bme_gazebo_sensors {
+  module action {
+    @verbatim (language="comment", text=
+      "Goal")
+    struct MoveAction_Goal {
+      double target_coordinate;
+    };
+    struct MoveAction_Result {
+      @verbatim (language="comment", text=
+        "Result")
+      double final_coordinate;
+    };
+    struct MoveAction_Feedback {
+      @verbatim (language="comment", text=
+        "Feedback")
+      double current_coordinate;
+    };
+  };
+};

@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "bme_gazebo_sensors__py",
+		"source" : "/home/snape/rt_2/actions/build/bme_gazebo_sensors/bme_gazebo_sensors__py"
+	}
+}
