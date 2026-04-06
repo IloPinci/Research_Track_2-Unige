@@ -1,8 +1,0 @@
-setup.py
-bme_gazebo_sensors/__init__.py
-bme_gazebo_sensors.egg-info/PKG-INFO
-bme_gazebo_sensors.egg-info/SOURCES.txt
-bme_gazebo_sensors.egg-info/dependency_links.txt
-bme_gazebo_sensors.egg-info/top_level.txt
-bme_gazebo_sensors/action/__init__.py
-bme_gazebo_sensors/action/_move_action.py
