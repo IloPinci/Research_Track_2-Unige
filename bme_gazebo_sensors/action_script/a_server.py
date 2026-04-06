@@ -64,9 +64,11 @@ class move_robot_x_server(Node):
             feedback_msg = MoveAction.Feedback()
 
             twist = Twist()
-            twist.linear.x = 0.2  # m/s forward speed
+            twist.linear.x = 0.2 if target_x > self.current_coordinate else -0.2
 
-            while self.current_coordinate < target_x:
+            rate = self.create_rate(10)     # 10 Hz
+
+            while rclpy.ok():
                 # Handle cancellation
                 if goal_handle.is_cancel_requested:
                     self.get_logger().info('Goal cancelled.')
@@ -75,6 +77,11 @@ class move_robot_x_server(Node):
                     result = MoveAction.Result()
                     result.final_coordinate  = self.current_coordinate
                     return result
+
+                # we see id the goal is reached
+                if (twist.linear.x > 0 and self.current_coordinate >= target_x) or \
+                (twist.linear.x < 0 and self.current_coordinate <= target_x):
+                    break
 
                 # Publish velocity command
                 self._cmd_vel_pub.publish(twist)
@@ -87,7 +94,7 @@ class move_robot_x_server(Node):
                     f'Current x: {self.current_coordinate:.2f} | '
                 )
 
-                time.sleep(0.1)
+                rate.sleep()
 
             # Goal reached
             self._stop_robot()
