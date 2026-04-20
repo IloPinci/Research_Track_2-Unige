@@ -12,12 +12,14 @@ def generate_launch_description():
             ComposableNode(
                 package='a1_pkg',
                 plugin='a1_pkg::PoseServerComponent',
-                name='pose_server'
+                name='pose_server',
+                parameters=[{'use_sim_time': True}]
             ),
             ComposableNode(
                 package='a1_pkg',
                 plugin='a1_pkg::PoseClientComponent',
-                name='pose_client'
+                name='pose_client',
+                parameters=[{'use_sim_time': True}]
             )
         ],
         output='screen',

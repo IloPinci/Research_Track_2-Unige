@@ -1,6 +1,7 @@
 # Goal
 float64 target_x
 float64 target_y
+float64 target_theta
 ---
 
 # Result
@@ -10,3 +11,4 @@ bool success
 # Feedback
 float64 current_x
 float64 current_y
+float64 current_theta
