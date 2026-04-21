@@ -48,8 +48,8 @@ private:
     const rclcpp_action::GoalUUID & /*uuid*/,
     std::shared_ptr<const MovePose::Goal> goal)
   {
-    RCLCPP_INFO(this->get_logger(), "Received goal: x=%.2f, y=%.2f",
-      goal->target_x, goal->target_y);
+    RCLCPP_INFO(this->get_logger(), "Received goal: x=%.2f, y=%.2f, theta=%.2f",
+      goal->target_x, goal->target_y, goal->target_theta);
     return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
   }
 
@@ -75,8 +75,8 @@ private:
     auto feedback = std::make_shared<MovePose::Feedback>();
     auto result = std::make_shared<MovePose::Result>();
 
-    RCLCPP_INFO(this->get_logger(), "Executing goal: x=%.2f, y=%.2f",
-      goal->target_x, goal->target_y);
+    RCLCPP_INFO(this->get_logger(), "Executing goal: x=%.2f, y=%.2f, theta=%.2f",
+      goal->target_x, goal->target_y, goal->target_theta);
 
     while (rclcpp::ok()) {
       if (goal_handle->is_canceling()) {
@@ -89,7 +89,6 @@ private:
 
       geometry_msgs::msg::TransformStamped transform;
       try {
-        // The diff drive plugin publishes odom -> base_footprint
         transform = tf_buffer_->lookupTransform(
           "odom", "base_footprint", tf2::TimePointZero);
       } catch (const tf2::TransformException & ex) {
@@ -106,29 +105,44 @@ private:
       double dy = goal->target_y - current_y;
       double distance = std::hypot(dx, dy);
 
-      RCLCPP_INFO(this->get_logger(),
-        "Position: (%.2f, %.2f), Distance to goal: %.2f",
-        current_x, current_y, distance);
-
-      if (distance < 0.1) {
-        break;
-      }
-
-      double target_yaw = std::atan2(dy, dx);
-      double angular_error = target_yaw - current_yaw;
-
-      // Normalize to [-pi, pi]
-      while (angular_error > M_PI)  angular_error -= 2.0 * M_PI;
-      while (angular_error < -M_PI) angular_error += 2.0 * M_PI;
-
       geometry_msgs::msg::Twist twist;
-      twist.linear.x  = std::min(0.5 * distance, 0.5);
-      twist.angular.z = 1.0 * angular_error;
+
+      if (distance > 0.1) {
+        double target_yaw = std::atan2(dy, dx);
+        double angular_error = target_yaw - current_yaw;
+
+        while (angular_error > M_PI)  angular_error -= 2.0 * M_PI;
+        while (angular_error < -M_PI) angular_error += 2.0 * M_PI;
+
+        twist.linear.x  = std::min(0.5 * distance, 0.5);
+        twist.angular.z = 1.0 * angular_error;
+
+        RCLCPP_INFO(this->get_logger(),
+          "Position Phase: (%.2f, %.2f), Distance: %.2f",
+          current_x, current_y, distance);
+      } else {
+        double final_angular_error = goal->target_theta - current_yaw;
+
+        while (final_angular_error > M_PI)  final_angular_error -= 2.0 * M_PI;
+        while (final_angular_error < -M_PI) final_angular_error += 2.0 * M_PI;
+
+        if (std::abs(final_angular_error) < 0.05) {
+          break;
+        }
+
+        twist.linear.x = 0.0;
+        twist.angular.z = 1.0 * final_angular_error;
+
+        RCLCPP_INFO(this->get_logger(),
+          "Orientation Phase: Target=%.2f, Current=%.2f, Error=%.2f",
+          goal->target_theta, current_yaw, final_angular_error);
+      }
 
       cmd_vel_pub_->publish(twist);
 
       feedback->current_x = current_x;
       feedback->current_y = current_y;
+      feedback->current_theta = current_yaw;
       goal_handle->publish_feedback(feedback);
 
       loop_rate.sleep();

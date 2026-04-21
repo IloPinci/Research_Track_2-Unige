@@ -54,9 +54,10 @@ private:
     auto goal_msg = MovePose::Goal();
     goal_msg.target_x = msg->x;
     goal_msg.target_y = msg->y;
+    goal_msg.target_theta = msg->theta;
 
-    RCLCPP_INFO(this->get_logger(), "Sending goal: x=%.2f, y=%.2f",
-      goal_msg.target_x, goal_msg.target_y);
+    RCLCPP_INFO(this->get_logger(), "Sending goal: x=%.2f, y=%.2f, theta=%.2f",
+      goal_msg.target_x, goal_msg.target_y, goal_msg.target_theta);
 
     auto send_goal_options = rclcpp_action::Client<MovePose>::SendGoalOptions();
 

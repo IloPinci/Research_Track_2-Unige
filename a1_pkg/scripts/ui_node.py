@@ -12,7 +12,7 @@ class UINode(Node):
 
     def run(self):
         print("Robot UI - Commands:")
-        print("  Enter X Y  -> send goal  (e.g. '5.0 3.0')")
+        print("  Enter X Y theta  -> send goal  (e.g. '5.0 3.0 10.0')")
         print("  'c'        -> cancel current goal")
         print("  'q'        -> quit")
 
@@ -37,19 +37,21 @@ class UINode(Node):
                 continue
 
             parts = user_input.split()
-            if len(parts) == 2:
+            if len(parts) == 3:
                 try:
                     x = float(parts[0])
                     y = float(parts[1])
+                    theta = float(parts[2])
                     msg = Pose2D()
                     msg.x = x
                     msg.y = y
+                    msg.theta = theta
                     self.pose_pub.publish(msg)
-                    print(f"Goal sent: x={x}, y={y}")
+                    print(f"Goal sent: x={x}, y={y}, theta={theta}")
                 except ValueError:
-                    print("Invalid input. Enter two numbers, 'c', or 'q'.")
+                    print("Invalid input. Enter three numbers, 'c', or 'q'.")
             else:
-                print("Invalid input. Enter two numbers, 'c', or 'q'.")
+                print("Invalid input. Enter three numbers, 'c', or 'q'.")
 
 
 def main(args=None):
