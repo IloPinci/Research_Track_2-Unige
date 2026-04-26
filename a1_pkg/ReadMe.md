@@ -1,5 +1,32 @@
 # ROS2 Research Track 2 - Assignment 1
 
+## Table of Contents
+
+<details>
+<summary><b>Expand Table of Contents</b></summary>
+
+* [Overview](#overview)
+* [System Architecture](#system-architecture)
+* [1. ROS2 Actions](#1-ros2-actions)
+    * [Academic Background](#academic-background)
+    * [Why Actions Here](#why-actions-here)
+    * [Implementation Notes](#implementation-notes)
+* [2. ROS2 Composable Nodes (Components)](#2-ros2-composable-nodes-components)
+    * [Academic Background](#academic-background-1)
+    * [Why Components Here](#why-components-here-1)
+    * [Implementation Notes](#implementation-notes-1)
+* [3. tf2 - Transform Library](#3-tf2---transform-library)
+    * [Academic Background](#academic-background-2)
+    * [Why tf2 Here](#why-tf2-here-1)
+    * [Angular Error Normalization](#angular-error-normalization)
+* [Package Structure](#package-structure)
+* [Building and Running](#building-and-running)
+* [Dependencies](#dependencies)
+* [Key Design Decisions](#key-design-decisions)
+
+</details>
+
+---
 
 ## Overview
 
@@ -76,6 +103,8 @@ The two-phase controller implemented inside the action:
 1. **Translation phase**: while Euclidean distance to target exceeds 0.1 m, compute a heading error and apply `v = min(0.5·d, 0.5)` m/s, `ω = 1.0·Δψ` rad/s.
 2. **Orientation phase**: once in position, rotate in place until `|Δθ| < 0.05` rad (~3°).
 
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
+
 ---
 
 ## 2. ROS2 Composable Nodes (Components)
@@ -109,6 +138,8 @@ RCLCPP_COMPONENTS_REGISTER_NODE(a1_pkg::PoseClientComponent)
 ```
 
 This writes a factory symbol into the shared library. The `CMakeLists.txt` compiles each as `SHARED` and registers it with `rclcpp_components_register_node`, which also generates a standalone executable (`pose_server_node`, `pose_client_node`) for debugging. A composable node is simultaneously a library and a runnable binary.
+
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
 
 ---
 
@@ -192,6 +223,8 @@ while (angular_error < -M_PI) angular_error += 2.0 * M_PI;
 
 Without this normalization, a robot facing 170° trying to reach -170° would spin 340° rather than 20°. The wrapping maps all angular errors into `(-π, π]`, ensuring the controller always chooses the shortest rotation.
 
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
+
 ---
 
 ## Package Structure
@@ -222,6 +255,8 @@ a1_pkg/
 ├── CMakeLists.txt
 └── package.xml
 ```
+
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
 
 ---
 
@@ -258,6 +293,8 @@ ros2 action send_goal /move_to_pose a1_pkg/action/MovePose \
   "{target_x: 5.0, target_y: 3.0, target_theta: 1.57}"
 ```
 
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
+
 ---
 
 ## Dependencies
@@ -274,6 +311,8 @@ ros2 action send_goal /move_to_pose a1_pkg/action/MovePose \
 | `robot_localization` | EKF sensor fusion (odom + IMU → `/tf`) |
 | `ros_gz_bridge` | ROS2 ↔ Gazebo topic bridging |
 
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
+
 ---
 
 ## Key Design Decisions
@@ -287,3 +326,5 @@ ros2 action send_goal /move_to_pose a1_pkg/action/MovePose \
 | MultiThreadedExecutor | Cancel callbacks must not be blocked by navigation threads |
 | Detached `std::thread` per goal | Executor remains free to handle cancel/new-goal events |
 | Proportional controller | Sufficient for low-speed navigation; no overshoot tuning required |
+
+<p align="right">(<a href="#table-of-contents">Back to ToC</a>)</p>
