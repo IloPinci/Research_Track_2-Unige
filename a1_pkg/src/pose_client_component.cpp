@@ -113,6 +113,6 @@ private:
     }
   }
 };
-}  // namespace a1_pkg
+} 
 
 RCLCPP_COMPONENTS_REGISTER_NODE(a1_pkg::PoseClientComponent)
