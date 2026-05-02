@@ -167,6 +167,6 @@ private:
     cmd_vel_pub_->publish(twist);
   }
 };
-}  // namespace a1_pkg
+} 
 
 RCLCPP_COMPONENTS_REGISTER_NODE(a1_pkg::PoseServerComponent)
