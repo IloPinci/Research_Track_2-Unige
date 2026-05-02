@@ -1,5 +1,11 @@
 # ROS2 Research Track 2 - Assignment 1
 
+<div align="center">
+
+![Demo Video](https://youtu.be/ZfaYOvg0nNI)
+ 
+</div>
+
 ## Table of Contents
 
 <details>
@@ -262,14 +268,21 @@ a1_pkg/
 
 ## Building and Running
 
+> **WSL users:** Before building or running anything, make sure to set the following environment variables in every terminal you open:
+> ```bash
+> export LIBGL_ALWAYS_SOFTWARE=1
+> source /opt/ros/humble/setup.bash
+> ```
+
+
 ```bash
 # Build
-cd ~/ros2_ws
+cd ~/<your directory>
 colcon build --packages-select a1_pkg
 source install/setup.bash
 
-# Launch simulation + robot
-ros2 launch a1_pkg spawn_robot.launch.py
+# Launch simulation + robot with an empty world (no obstacles)
+ros2 launch a1_pkg spawn_robot.launch.py world:=world_empty.sdf
 
 # Launch action server + client (in a new terminal)
 ros2 launch a1_pkg architecture.launch.py
