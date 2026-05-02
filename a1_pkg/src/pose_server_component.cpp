@@ -75,6 +75,9 @@ private:
     auto feedback = std::make_shared<MovePose::Feedback>();
     auto result = std::make_shared<MovePose::Result>();
 
+    // Wait for a valid (recent) transform
+    rclcpp::sleep_for(std::chrono::milliseconds(500));
+
     RCLCPP_INFO(this->get_logger(), "Executing goal: x=%.2f, y=%.2f, theta=%.2f",
       goal->target_x, goal->target_y, goal->target_theta);
 
@@ -90,7 +93,9 @@ private:
       geometry_msgs::msg::TransformStamped transform;
       try {
         transform = tf_buffer_->lookupTransform(
-          "odom", "base_footprint", tf2::TimePointZero);
+          "odom", "base_footprint", 
+          tf2::TimePointZero,
+          tf2::durationFromSec(0.1));  // add timeout);
       } catch (const tf2::TransformException & ex) {
         RCLCPP_WARN(this->get_logger(), "TF lookup failed: %s", ex.what());
         loop_rate.sleep();

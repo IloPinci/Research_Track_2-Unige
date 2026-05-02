@@ -37,59 +37,68 @@ private:
   // Keep track of the current goal handle so we can cancel it
   std::shared_ptr<GoalHandleMove> current_goal_handle_;
 
-  void pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr msg)
-  {
-    if (!client_ptr_->wait_for_action_server(std::chrono::seconds(2))) {
-      RCLCPP_ERROR(this->get_logger(), "Action server not available");
-      return;
-    }
-
-    // Cancel any active goal before sending a new one
-    if (current_goal_handle_) {
-      client_ptr_->async_cancel_goal(current_goal_handle_);
-      current_goal_handle_ = nullptr;
-      RCLCPP_INFO(this->get_logger(), "Previous goal cancelled");
-    }
-
-    auto goal_msg = MovePose::Goal();
-    goal_msg.target_x = msg->x;
-    goal_msg.target_y = msg->y;
-    goal_msg.target_theta = msg->theta;
-
-    RCLCPP_INFO(this->get_logger(), "Sending goal: x=%.2f, y=%.2f, theta=%.2f",
-      goal_msg.target_x, goal_msg.target_y, goal_msg.target_theta);
-
-    auto send_goal_options = rclcpp_action::Client<MovePose>::SendGoalOptions();
-
-    send_goal_options.goal_response_callback =
-      [this](const std::shared_ptr<GoalHandleMove> goal_handle) {
-        if (!goal_handle) {
-          RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
-          return;
-        }
-        current_goal_handle_ = goal_handle;
-        RCLCPP_INFO(this->get_logger(), "Goal accepted");
-      };
-
-    send_goal_options.feedback_callback =
-      [this](GoalHandleMove::SharedPtr,
-             const std::shared_ptr<const MovePose::Feedback> feedback) {
-        RCLCPP_INFO(this->get_logger(), "Feedback: (%.2f, %.2f)",
-          feedback->current_x, feedback->current_y);
-      };
-
-    send_goal_options.result_callback =
-      [this](const GoalHandleMove::WrappedResult & result) {
-        current_goal_handle_ = nullptr;
-        if (result.result->success) {
-          RCLCPP_INFO(this->get_logger(), "Goal succeeded!");
-        } else {
-          RCLCPP_INFO(this->get_logger(), "Goal failed or was cancelled");
-        }
-      };
-
-    client_ptr_->async_send_goal(goal_msg, send_goal_options);
+ void pose_callback(const geometry_msgs::msg::Pose2D::SharedPtr msg)
+{
+  if (!client_ptr_->wait_for_action_server(std::chrono::seconds(2))) {
+    RCLCPP_ERROR(this->get_logger(), "Action server not available");
+    return;
   }
+
+  if (current_goal_handle_) {
+    client_ptr_->async_cancel_goal(current_goal_handle_);
+    current_goal_handle_ = nullptr;
+    RCLCPP_INFO(this->get_logger(), "Previous goal cancelled");
+    rclcpp::sleep_for(std::chrono::milliseconds(300));
+  }
+
+  auto goal_msg = MovePose::Goal();
+  goal_msg.target_x = msg->x;
+  goal_msg.target_y = msg->y;
+  goal_msg.target_theta = msg->theta;
+
+  RCLCPP_INFO(this->get_logger(), "Sending goal: x=%.2f, y=%.2f, theta=%.2f",
+    goal_msg.target_x, goal_msg.target_y, goal_msg.target_theta);
+
+  auto send_goal_options = rclcpp_action::Client<MovePose>::SendGoalOptions();
+
+  send_goal_options.goal_response_callback =
+    [this](const std::shared_ptr<GoalHandleMove> goal_handle) {
+      if (!goal_handle) {
+        RCLCPP_ERROR(this->get_logger(), "Goal was rejected by server");
+        return;
+      }
+      current_goal_handle_ = goal_handle;
+      RCLCPP_INFO(this->get_logger(), "Goal accepted, ID stored");
+    };
+
+  send_goal_options.feedback_callback =
+    [this](GoalHandleMove::SharedPtr,
+           const std::shared_ptr<const MovePose::Feedback> feedback) {
+      RCLCPP_INFO(this->get_logger(), "Feedback: (%.2f, %.2f)",
+        feedback->current_x, feedback->current_y);
+    };
+
+  send_goal_options.result_callback =
+    [this](const GoalHandleMove::WrappedResult & result) {
+      // Only clear handle if it belongs to the currently tracked goal
+      if (current_goal_handle_ &&
+          result.goal_id == current_goal_handle_->get_goal_id()) {
+        current_goal_handle_ = nullptr;
+        RCLCPP_INFO(this->get_logger(), "Active goal finished, handle cleared");
+      } else {
+        RCLCPP_INFO(this->get_logger(), "Old goal result received, ignoring");
+      }
+
+      if (result.code == rclcpp_action::ResultCode::SUCCEEDED) {
+        RCLCPP_INFO(this->get_logger(), "Goal succeeded!");
+      } else {
+        RCLCPP_INFO(this->get_logger(), "Goal failed or was cancelled");
+      }
+    };
+
+  client_ptr_->async_send_goal(goal_msg, send_goal_options);
+}
+
 
   void cancel_callback(const std_msgs::msg::Bool::SharedPtr msg)
   {
