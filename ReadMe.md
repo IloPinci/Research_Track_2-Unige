@@ -2,11 +2,7 @@
 
 <div align="center">
 
-![Demo Video](https://github.com/user-attachments/assets/4ca848a8-a43a-407c-9754-8701e1ae2e2d
-)
- 
-
-
+https://github.com/user-attachments/assets/4ca848a8-a43a-407c-9754-8701e1ae2e2d
 
 </div>
 
